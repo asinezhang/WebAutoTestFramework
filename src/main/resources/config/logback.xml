@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 不打印 logback 内部日志信息。启用热更新，检测周期设为5秒 -->
+<configuration debug="false" scan="true" scanPeriod="5000">
+
+    <!-- contextName:上下文名称 -->
+    <contextName>logback_autotest-excel</contextName>
+
+    <!-- property:定义变量以备引用 -->
+    <property name="log.dir" value="C:/log" />
+
+    <!-- ConsoleAppender:控制台输出策略 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 对日志进行规范编码 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %30logger{0}:%-3line - %msg%n</pattern>
+        </encoder>
+        <!-- 拦截器，只显示 INFO 级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- FileAppender:文件输出策略 -->
+    <appender name="FULL_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${log.dir}/autotest-excel_stats_all.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %30logger{0}:%-3line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- FileAppender:文件输出策略 -->
+    <appender name="INFO_LOG" class="ch.qos.logback.core.FileAppender">
+        <file>${log.dir}/autotest-excel_stats_report.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %30logger{0}:%-3line - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 拦截器，只显示 INFO 级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 全局设置 -->
+    <root level="ALL">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FULL_LOG" />
+        <appender-ref ref="INFO_LOG" />
+    </root>
+
+</configuration>
